@@ -8,7 +8,7 @@ module Controller
     end
 
     def index
-      @collection = collection_scope
+      @collection = collection_scope.all
       respond_with @collection
     end
 
