@@ -8,7 +8,7 @@ module Controller
     end
 
     def index
-      @collection = collection_scope.all
+      @collection = load_collection
       respond_with @collection
     end
 
@@ -49,6 +49,10 @@ module Controller
 
     def collection_scope
       resource_class
+    end
+    
+    def load_collection
+      collection_scope.all
     end
 
     def load_resource
