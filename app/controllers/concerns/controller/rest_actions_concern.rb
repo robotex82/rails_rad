@@ -13,7 +13,7 @@ module Controller
     end
 
     def new
-      @resource = resource_class.new
+      @resource = initialize_resource
       respond_with @resource
     end
 
@@ -50,9 +50,13 @@ module Controller
     def collection_scope
       resource_class
     end
+
+    def initialize_resource
+      resource_class.new
+    end
     
     def load_collection
-      collection_scope.all
+      collection_scope
     end
 
     def load_resource
