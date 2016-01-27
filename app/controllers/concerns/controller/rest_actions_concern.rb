@@ -7,6 +7,8 @@ module Controller
       responders :flash
     end
 
+    abstract_method :permitted_params
+
     def index
       @collection = load_collection
       respond_with @collection
