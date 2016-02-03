@@ -7,12 +7,12 @@ module Controller
     end
 
     def index
+      return super unless request.format == :json
       @collection = load_collection
 
       @collection = add_filter_to_scope(@collection) if (['only'] & params.keys).any?
       @collection = add_includes_to_scope(@collection) if included_associations.any?
       @collection = add_count_to_scope(@collection) if params[:count]
-
       respond_to do |format|
         format.json {  render json: @collection, include: included_associations  }
       end
@@ -27,6 +27,7 @@ module Controller
     def add_includes_to_scope(scope)
       included_associations.each do |include|
         scope = scope.send(:includes, include)
+        # scope = scope.send(:references, include)
       end
       scope
     end
