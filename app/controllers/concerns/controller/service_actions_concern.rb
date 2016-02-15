@@ -28,7 +28,11 @@ module Controller
     private
 
     def initialize_service
-      service_class.new
+      if params[service_class.name.demodulize.underscore.to_sym].nil?
+        service_class.new
+      else
+        service_class.new(permitted_params)
+      end
     end
 
     def prepare_service

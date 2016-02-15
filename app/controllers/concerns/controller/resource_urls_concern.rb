@@ -18,11 +18,15 @@ module Controller
     end
 
     def edit_resource_path(resource)
-      url_for(controller: controller_path, action: :edit, id: resource.to_param)
+      url_for(controller: controller_path, action: :edit, id: resource.send(to_param_method))
     end
 
     def resource_path(resource)
-      url_for(controller: controller_path, action: :show, id: resource.to_param)
+      url_for(controller: controller_path, action: :show, id: resource.send(to_param_method))
+    end
+
+    def to_param_method
+      :to_param
     end
   end
 end
