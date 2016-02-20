@@ -61,8 +61,12 @@ module Controller
       collection_scope
     end
 
+    def load_scope
+      resource_class
+    end
+
     def load_resource
-      resource_class.find(params[:id])
+      load_scope.find(params[:id])
     end
   end
 end
