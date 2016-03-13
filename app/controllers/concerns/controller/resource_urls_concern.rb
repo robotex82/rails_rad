@@ -10,19 +10,19 @@ module Controller
     end
 
     def collection_path
-      url_for(controller: controller_path, action: :index)
+      url_for(controller: controller_path, action: :index, only_path: true)
     end
 
     def new_resource_path
-      url_for(controller: controller_path, action: :new)
+      url_for(controller: controller_path, action: :new, only_path: true)
     end
 
     def edit_resource_path(resource)
-      url_for(controller: controller_path, action: :edit, id: resource.send(to_param_method))
+      url_for(controller: controller_path, action: :edit, id: resource.send(to_param_method), only_path: true)
     end
 
     def resource_path(resource)
-      url_for(controller: controller_path, action: :show, id: resource.send(to_param_method))
+      url_for(controller: controller_path, action: :show, id: resource.send(to_param_method), only_path: true)
     end
 
     def to_param_method

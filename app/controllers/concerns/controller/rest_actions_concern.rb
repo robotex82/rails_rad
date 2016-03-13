@@ -58,7 +58,7 @@ module Controller
     end
     
     def load_collection
-      collection_scope
+      collection_scope.all
     end
 
     def load_scope
