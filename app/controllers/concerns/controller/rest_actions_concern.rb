@@ -22,7 +22,7 @@ module Controller
     def create
       @resource = resource_class.new(permitted_params)
       @resource.save
-      respond_with @resource, location: collection_path
+      respond_with @resource, location: after_create_location
     end
 
     def show
@@ -38,16 +38,28 @@ module Controller
     def update
       @resource = load_resource
       @resource.update_attributes(permitted_params)
-      respond_with @resource, location: collection_path
+      respond_with @resource, location: after_update_location
     end
 
     def destroy
       @resource = load_resource
       @resource.destroy
-      respond_with @resource, location: collection_path
+      respond_with @resource, location: after_destroy_location
     end
 
     private
+
+    def after_create_location
+      collection_path
+    end
+
+    def after_destroy_location
+      collection_path
+    end
+
+    def after_update_location
+      collection_path
+    end
 
     def collection_scope
       resource_class
