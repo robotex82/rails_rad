@@ -10,6 +10,10 @@ module Controller
       def resource_class
         name.gsub('Controller', '').constantize
       end
+
+      def resource_count
+        resource_class.count
+      end
     end
 
     def resource_class

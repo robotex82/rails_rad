@@ -15,12 +15,12 @@ module Controller
     end
 
     def new
-      @resource = initialize_resource
+      @resource = initialize_scope.new(permitted_params_for_new)
       respond_with @resource
     end
 
     def create
-      @resource = resource_class.new(permitted_params)
+      @resource = initialize_scope.new(permitted_params)
       @resource.save
       respond_with @resource, location: after_create_location
     end
@@ -49,8 +49,16 @@ module Controller
 
     private
 
+    def permitted_params_for_new
+      params.has_key?(resource_class.name.demodulize.underscore.to_sym) ? permitted_params : {}
+    end
+
+    def base_scope
+      resource_class
+    end
+
     def after_create_location
-      collection_path
+      @resource # collection_path
     end
 
     def after_destroy_location
@@ -58,15 +66,19 @@ module Controller
     end
 
     def after_update_location
-      collection_path
+      @resource # collection_path
     end
 
     def collection_scope
-      resource_class
+      base_scope
+    end
+
+    def initialize_scope
+      base_scope
     end
 
     def initialize_resource
-      resource_class.new
+      initialize_scope.new
     end
     
     def load_collection
@@ -74,7 +86,7 @@ module Controller
     end
 
     def load_scope
-      resource_class
+      base_scope
     end
 
     def load_resource
